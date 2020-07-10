@@ -38,6 +38,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'rx))
+
 (defgroup highlight-quoted nil
   "Highlight Lisp quotes."
   :prefix "highlight-quoted-"
