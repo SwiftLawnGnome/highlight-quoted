@@ -73,14 +73,14 @@ re-enabled."
   `((,(rx (or "`" "'" "#'")) . 'highlight-quoted-quote)))
 
 (defconst highlight-quoted--full-keywords
-  `((,(rx (group (any "`'"))
-          (? (group (+ (or (syntax word) (syntax symbol))))))
-     (1 'highlight-quoted-quote)
-     (2 'highlight-quoted-symbol nil t))
-    (,(rx (group "#'")
+  `((,(rx (group "#'")
           (group (+ (or (syntax word) (syntax symbol)))))
      (1 'highlight-quoted-quote)
-     (2 'highlight-quoted-function))))
+     (2 'highlight-quoted-function))
+    (,(rx (group (any "`'"))
+          (? (group (+ (or (syntax word) (syntax symbol))))))
+     (1 'highlight-quoted-quote)
+     (2 'highlight-quoted-symbol nil t))))
 
 (defvar highlight-quoted--buffer-keywords nil)
 
