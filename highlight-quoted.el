@@ -53,6 +53,11 @@
   "Face to highlight quoted Lisp symbols."
   :group 'highlight-quoted)
 
+(defface highlight-quoted-function
+  '((t :inherit font-lock-function-name-face))
+  "Face to highlight sharp quoted (#') Lisp symbols."
+  :group 'highlight-quoted)
+
 (defcustom highlight-quoted-highlight-symbols t
   "Non-nil iff quoted symbols should be highlighted.
 
@@ -65,12 +70,14 @@ re-enabled."
   `((,(rx (or "`" "'" "#'")) . 'highlight-quoted-quote)))
 
 (defconst highlight-quoted--full-keywords
-  `((,(rx (and (group (or "`" "'" "#'"))
-               (? (* whitespace)
-                  (group (+ (or (syntax word)
-                                (syntax symbol)))))))
+  `((,(rx (group (any "`'"))
+          (? (group (+ (or (syntax word) (syntax symbol))))))
      (1 'highlight-quoted-quote)
-     (2 'highlight-quoted-symbol nil t))))
+     (2 'highlight-quoted-symbol nil t))
+    (,(rx (group "#'")
+          (group (+ (or (syntax word) (syntax symbol)))))
+     (1 'highlight-quoted-quote)
+     (2 'highlight-quoted-function))))
 
 (defvar highlight-quoted--buffer-keywords nil)
 
